@@ -1,0 +1,8 @@
+[[backups]]
+dir = "test_dir/"
+[[peers]]
+name = "test_peer"
+url = "file:////test_backupdir/backup-1/"
+[[peers]]
+name = "test_peer2"
+url = "file:////test_backupdir/backup-2/"

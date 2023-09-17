@@ -10,8 +10,8 @@
 
 - [ ] Add systemd service file
 - [ ] Add systemd file config
-- [ ] finish scheduler set up
-- [ ] make run.py useful for config
+- [ ] Finish scheduler set up
+- [ ] Make run.py useful for config
 - [ ] Add tests
 
 ## later TODOs

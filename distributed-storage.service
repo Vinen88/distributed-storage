@@ -1,0 +1,10 @@
+[Unit]
+Description=Distributed Storage Service
+
+[Service]
+User=Your Linux user name
+WorkingDirectory=Your timetagger folder
+ExecStart=Your timetagger folder/venv/bin/python3 -m timetagger
+
+[Install]
+WantedBy=multi-user.target

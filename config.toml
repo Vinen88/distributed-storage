@@ -2,7 +2,7 @@
 dir = "test_dir/"
 [[peers]]
 name = "test_peer"
-url = "file:////test_backupdir/backup-1/"
+url = "webdav://127.0.0.1/jason1/"
 [[peers]]
 name = "test_peer2"
-url = "file:////test_backupdir/backup-2/"
+url = "webdav://127.0.0.1/jason2/"

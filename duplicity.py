@@ -1,6 +1,6 @@
 import os
 import sys
-import tomllib
+import toml
 from subprocess import Popen, PIPE
 from dotenv import load_dotenv
 from typing import Union, Literal
@@ -21,8 +21,8 @@ class Duplicity:
         self.dirs = tuple(backup["dir"] for backup in self.config["backups"])
 
     def load_config(self) -> Config:
-        with open(self.filepath, "rb") as fo:
-            self.config = tomllib.load(fo)
+        with open(self.filepath, "rt") as fo:
+            self.config = toml.load(fo)
         self.vlog(f"Loaded config file from {self.filepath}")
         self.vlog(str(self.config))
 

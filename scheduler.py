@@ -51,4 +51,7 @@ def create_service(venvdir: str):
 
 
 if __name__ == "__main__" and not sys.flags.interactive:
-    main()
+    if len(sys.argv) > 1 and sys.argv[1] == "install":
+        create_service(sys.argv[2])
+    else:
+        main()

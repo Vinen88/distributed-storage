@@ -12,10 +12,10 @@ Config = dict[Union[Literal["peers"], Literal["backup"]]]
 
 
 class Duplicity:
-    def __init__(self, filepath: str, verbose=False) -> None:
+    def __init__(self, config_filepath: str, verbose=False) -> None:
         self.verbose = verbose
         self.config = None
-        self.filepath = filepath
+        self.filepath = config_filepath
         self.load_config()
         self.peers = tuple(peer["url"] for peer in self.config["peers"])
         self.dirs = tuple(backup["dir"] for backup in self.config["backups"])

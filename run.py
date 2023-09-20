@@ -17,7 +17,7 @@ def main(
     ),
     verbose: bool = typer.Option(True, help="Enable screamy logging"),
 ):
-    duper = Duplicity(filepath=config, verbose=verbose)
+    duper = Duplicity(config_filepath=config, verbose=verbose)
     duper.dupe_backup()
 
 

@@ -30,7 +30,7 @@ def do_backup(job: Callable, minutes: str):
 def create_service(venvdir: str):
     "creates a service"
     with open(SERVICE_PATH, "wt") as fo:
-        toml.dump(
+        text = toml.dumps(
             {
                 "Unit": {
                     "Description": "Duplicity backup service",
@@ -46,6 +46,7 @@ def create_service(venvdir: str):
             },
             fo,
         )
+        text.replace('"', "").replace(" = ", "=")
         os.system(f'systemctl enable "{SERVICE_NAME}"')
         os.system(f'systemctl start "{SERVICE_NAME}"')
 

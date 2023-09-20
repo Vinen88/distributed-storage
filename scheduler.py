@@ -15,7 +15,7 @@ THIS_DIR = (Path(__file__) / "..").resolve()
 
 
 def main():
-    # create_service()
+    print("Service is now running! Woohoo :)", file=sys.stderr)
     do_backup(duplicity.Duplicity("config.toml").dupe_backup, ":00")
 
 
@@ -24,10 +24,10 @@ def do_backup(job: Callable, minutes: str):
     schedule.every().hour.at(minutes).do(job)
     while True:
         schedule.run_pending()
-        sleep(1)
+        sleep(600)
 
 
-def create_service(venvdir: str):
+def create_service():
     "creates a service"
     text = (
         toml.dumps(
@@ -38,7 +38,7 @@ def create_service(venvdir: str):
                 "Service": {
                     "User": os.getenv("USER"),
                     "WorkingDirectory": str(THIS_DIR),
-                    "ExecStart": f"{venvdir}/bin/python -m {__file__}",
+                    "ExecStart": f"{str(THIS_DIR/'run_in_venv.bash')}",
                 },
                 "Install": {
                     "WantedBy": "multi-user.target",
@@ -56,6 +56,8 @@ def create_service(venvdir: str):
 
 if __name__ == "__main__" and not sys.flags.interactive:
     if len(sys.argv) > 1 and sys.argv[1] == "install":
-        create_service(sys.argv[2])
+        create_service()
     else:
         main()
+
+

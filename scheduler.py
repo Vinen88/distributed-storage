@@ -29,8 +29,8 @@ def do_backup(job: Callable, minutes: str):
 
 def create_service(venvdir: str):
     "creates a service"
-    with open(SERVICE_PATH, "wt") as fo:
-        text = toml.dumps(
+    text = (
+        toml.dumps(
             {
                 "Unit": {
                     "Description": "Duplicity backup service",
@@ -44,11 +44,14 @@ def create_service(venvdir: str):
                     "WantedBy": "multi-user.target",
                 },
             },
-            fo,
         )
-        text.replace('"', "").replace(" = ", "=")
-        os.system(f'systemctl enable "{SERVICE_NAME}"')
-        os.system(f'systemctl start "{SERVICE_NAME}"')
+        .replace('"', "")
+        .replace(" = ", "=")
+    )
+    with open(SERVICE_PATH, "wt", encoding="utf-8") as fo:
+        fo.write(text)
+    os.system(f'systemctl enable "{SERVICE_NAME}"')
+    os.system(f'systemctl start "{SERVICE_NAME}"')
 
 
 if __name__ == "__main__" and not sys.flags.interactive:

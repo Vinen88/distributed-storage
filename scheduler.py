@@ -3,15 +3,9 @@
 import schedule
 from time import sleep
 from typing import Callable
-import os
-import toml
-from pathlib import Path
 import sys
 import duplicity
-
-SERVICE_NAME = "distributed-storage.service"
-SERVICE_PATH = str((Path("/etc/systemd/system/") / SERVICE_NAME).resolve())
-THIS_DIR = (Path(__file__) / "..").resolve()
+from install import create_service
 
 
 def main():
@@ -27,39 +21,8 @@ def do_backup(job: Callable, minutes: str):
         sleep(600)
 
 
-def create_service():
-    assert os.getenv("USER"), "Missing environment variable USER"
-
-    "creates a service"
-    text = (
-        toml.dumps(
-            {
-                "Unit": {
-                    "Description": "Duplicity backup service",
-                },
-                "Service": {
-                    "User": os.getenv("USER"),
-                    "WorkingDirectory": str(THIS_DIR),
-                    "ExecStart": f"{str(THIS_DIR/'run_in_venv.bash')}",
-                },
-                "Install": {
-                    "WantedBy": "multi-user.target",
-                },
-            },
-        )
-        .replace('"', "")
-        .replace(" = ", "=")
-    )
-    with open(SERVICE_PATH, "wt", encoding="utf-8") as fo:
-        fo.write(text)
-    os.system(f'systemctl enable "{SERVICE_NAME}"')
-    os.system(f'systemctl start "{SERVICE_NAME}"')
-
-
 if __name__ == "__main__" and not sys.flags.interactive:
-    if len(sys.argv) > 1 and sys.argv[1] == "install":
+    if len(sys.argv) > 1 and sys.argv[1] == "install-client":
         create_service()
     else:
         main()
-
-

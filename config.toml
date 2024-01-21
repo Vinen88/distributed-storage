@@ -6,3 +6,4 @@ url = "webdav://127.0.0.1/jason1/"
 [[peers]]
 name = "test_peer2"
 url = "webdav://127.0.0.1/jason2/"
+

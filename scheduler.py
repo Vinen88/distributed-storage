@@ -28,6 +28,8 @@ def do_backup(job: Callable, minutes: str):
 
 
 def create_service():
+    assert os.getenv("USER"), "Missing environment variable USER"
+
     "creates a service"
     text = (
         toml.dumps(

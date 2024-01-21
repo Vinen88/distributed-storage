@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 nginx
-bash
+while true; do sleep 999999999999999; done
+

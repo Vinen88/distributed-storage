@@ -3,7 +3,7 @@ from pathlib import Path
 import os
 
 
-def create_service(user: str, cwd: Path, service_install: Path):
+def create_service(user: str, cwd: Path, service_install: Path, exec_start: str):
     "creates a service"
 
     text = (
@@ -15,7 +15,7 @@ def create_service(user: str, cwd: Path, service_install: Path):
                 "Service": {
                     "User": user,
                     "WorkingDirectory": str(cwd),
-                    "ExecStart": f"{cwd/'run_in_venv.bash'}",
+                    "ExecStart": f"{str((cwd/exec_start).resolve())}",
                 },
                 "Install": {
                     "WantedBy": "multi-user.target",
@@ -27,5 +27,6 @@ def create_service(user: str, cwd: Path, service_install: Path):
     )
     with open(service_install, "wt", encoding="utf-8") as fo:
         fo.write(text)
-    os.system(f'systemctl enable "{str(service_install)}"')
-    os.system(f'systemctl start "{str(service_install)}"')
+    
+    os.system(f'systemctl enable "{service_install.name}"')
+    os.system(f'systemctl start "{service_install.name}"')

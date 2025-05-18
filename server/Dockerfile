@@ -8,5 +8,4 @@ WORKDIR /www
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY site.conf /etc/nginx/sites-enabled/default
 
-COPY init_nginx.bash "/init_nginx.bash"
-ENTRYPOINT [ "/init_nginx.bash" ]
+ENTRYPOINT [ "nginx" ]
